@@ -1,0 +1,24 @@
+{
+  "name": "meshform-doc",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.28"
+  },
+  "dependencies": {
+    "@jsonforms/core": "^3.8.0",
+    "@jsonforms/vue": "^3.8.0",
+    "@mdi/font": "^7.4.47",
+    "@meshflow/core": "^0.8.9",
+    "@meshflow/form": "^0.3.0",
+    "@meshflow/form-vue": "^0.1.2",
+    "@vue-flow/core": "^1.48.2",
+    "vuetify": "^3.0.0"
+  }
+}

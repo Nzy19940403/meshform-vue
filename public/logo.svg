@@ -1,0 +1,73 @@
+ 
+ 
+<!-- <svg width="240" height="240" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mesh_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1" />
+      <stop offset="100%" style="stop-color:#a855f7" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="50" cy="50" r="38" stroke="url(#mesh_grad)" stroke-width="2" stroke-dasharray="4 3" opacity="0.4">
+    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite" />
+  </circle>
+
+  <path d="M15 70 C 45 70, 65 30, 85 30" stroke="url(#mesh_grad)" stroke-width="10" stroke-linecap="round" opacity="0.2"/>
+  <path d="M15 30 C 45 30, 65 70, 85 70" stroke="url(#mesh_grad)" stroke-width="10" stroke-linecap="round"/>
+</svg> -->
+
+ 
+<svg width="240" height="240" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+<linearGradient id="mesh_positional_grad" x1="12" y1="50" x2="88" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e3a8a"/>   
+      <stop offset="35%" stop-color="#4f46e5"/>  
+      <stop offset="65%" stop-color="#9a3412"/>  
+      <stop offset="100%" stop-color="#ea580c"/> 
+      </linearGradient>
+    <!-- <linearGradient id="mesh_positional_grad" x1="12" y1="50" x2="88" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4f46e5"/> <stop offset="100%" stop-color="#22c55e"/> 
+      <stop offset="0%" stop-color="#6366f1"/> <stop offset="100%" stop-color="#00f2fe"/> 
+      <stop offset="0%" stop-color="#4338ca"/> <stop offset="100%" stop-color="#fb923c"/> 
+      <stop offset="0%" stop-color="#8b5cf6"/> <stop offset="100%" stop-color="#ef4444"/> 
+   
+    </linearGradient> -->
+  </defs>
+
+  <path id="mobius_smooth"
+    d="
+      M50,50
+      C68,22 88,35 88,50
+      C88,65 68,78 50,50
+      C32,22 12,35 12,50
+      C12,65 32,78 50,50
+      Z
+    "
+  />
+
+  <use href="#mobius_smooth"
+    stroke="url(#mesh_positional_grad)"
+    stroke-width="1"
+    fill="none"
+    opacity="0.1"
+  />
+
+  <use href="#mobius_smooth"
+    stroke="url(#mesh_positional_grad)"
+    stroke-width="2.8"
+    fill="none"
+    stroke-dasharray="3 5" 
+    stroke-linecap="round">
+    <animate attributeName="stroke-dashoffset"
+      from="0" to="-16" 
+      dur="1.2s"
+      repeatCount="indefinite"/>
+  </use>
+
+ 
+</svg>
+
+ 
+
+ 
+
