@@ -402,6 +402,9 @@ body {
 
 /* ---------- Tables ---------- */
 .vp-doc table {
+  display: table;          /* override VitePress display:block，让 border 按内容宽度收缩 */
+  width: auto;
+  max-width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--border-subtle);
@@ -481,4 +484,9 @@ body {
 ::selection {
   background: var(--accent-dim);
   color: var(--text-primary);
+}
+
+body .v-application__wrap{
+  height: auto;
+  min-height: auto;
 }

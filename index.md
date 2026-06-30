@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "⧩ MeshForm Vue"
-  text: "@jsonforms/vue + 联动引擎"
-  tagline: 已经在用 @jsonforms/vue？把 &lt;json-forms&gt; 换成 &lt;MeshForm&gt;，加一个 :rules prop，字段联动就有了。Schema 不动、Renderer 不动、@change 不动。
+  name: "MeshForm Vue"
+  text: "为 JSON Forms 注入确定性"
+  tagline: "作为 <json-forms> 的 Drop-in 替代方案，将视图渲染与状态调度彻底解耦。基于 DAG 与水位线机制，为复杂表单的字段联动提供绝对的时序与高性能。"
   image:
     src: /logo.svg
     alt: MeshForm Logo
@@ -13,35 +13,34 @@ hero:
       text: 快速开始
       link: /guide/getting-started
     - theme: alt
-      text: 从 JSON Forms 迁移
-      link: /guide/mesh-form#从-json-forms-迁移
-    - theme: alt
-      text: 看看效果
-      link: /demos/order-form
+      text: 了解架构设计
+      link: /guide/architecture
 
 features:
-  - title: "一行替换，零迁移成本"
-    icon: "🔄"
-    details: "`<json-forms>` → `<MeshForm>`，保留 `:schema`、`:renderers`、`@change`。不改 Schema 结构，不改自定义 Renderer，不改数据格式。"
-  - title: "联动顺序，永远正确"
+  - title: "Drop-in 无损替换"
+    icon: "📦"
+    details: "JSON Forms 的即插即用型状态大脑。完全兼容原有 API 和 UI 协议，只需注入 :rules 属性，即可将表单交互逻辑托管至 MeshFlow 引擎，迁移成本归零。"
+  - title: "DAG 拓扑与循环依赖收敛"
     icon: "⚡"
-    details: 底层是有向无环图，引擎按拓扑顺序严格执行。500 个字段、几十条规则，不会算错顺序，不会竞态，不用你操心执行时机。
-  - title: "所有动态状态全覆盖"
+    details: "同时支持拓扑有序的 DAG 执行流与带有环路依赖的纠缠系统。采用水位线调度与势能收敛算法，无论逻辑链路多复杂，都能保证状态演化的确定性与一致性。"
+  - title: "控制权反转 (IoC)"
     icon: "🎛️"
-    details: "hidden / disabled / readonly / required / label / placeholder / options / value / theme — 任意字段的任意属性都可以用 `from()` 声明为另一个字段的函数。"
-  - title: "今天 Vue，明天也能换"
-    icon: "🔗"
-    details: 联动核心是纯 TypeScript，通过 UITrigger 接口与框架响应式解耦。今天跑在 Vue 3，迁移到 React 时联动逻辑不用动。
+    details: "组件仅负责被动渲染。从字段显隐到属性控制，皆由引擎通过 UITrigger 执行原子级调度。拒绝框架级全量重绘，只在计算结果演化时触发精准更新。"
+  - title: "纯粹的 Headless 架构"
+    icon: "🧩"
+    details: "引擎逻辑与 UI 视图彻底解耦。核心计算由纯 TypeScript 实现，不绑定特定 UI 框架，支持跨端跨框架逻辑复用。"
 ---
 
 <script setup>
 import ArchGraph from './.vitepress/components/ArchGraph.vue'
 </script>
 
-## 分层架构，各管各的
+## 架构哲学：计算与视图解耦
 
 <ClientOnly>
   <ArchGraph />
 </ClientOnly>
 
-逻辑层只管计算，渲染层只管显示，两层之间通过 UITrigger 接口通信。要换 UI 库、单独测联动逻辑、或者迁移到其他框架，互相都不影响。
+通过引入 MeshFlow 作为“最强外脑”，我们将表单的**数据推演流**与**UI 渲染流**进行了彻底的物理隔离。两层之间仅通过 `UITrigger` 接口通信：底层引擎在后台静默完成高频、复杂的拓扑计算，而视图层只负责接收确定的“稳态快照”进行局部刷新。
+
+这意味着：你可以单独对联动逻辑进行单元测试，也可以随时更换底层的 UI 组件库（Element Plus / Ant Design / Vuetify）。任凭表现层千变万化，你的业务因果链条始终稳如泰山。

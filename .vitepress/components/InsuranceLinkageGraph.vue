@@ -10,7 +10,6 @@
         :nodes="nodes"
         :edges="edges"
         :fit-view-on-init="true"
-        :prevent-scrolling="false"
         class="ins-flow"
       >
         <template #node-field="{ data }">
@@ -51,49 +50,49 @@ import '@vue-flow/core/dist/theme-default.css'
 
 const nodes = [
   // ── Layer 0 – inputs ────────────────────────────────────────────────────
-  { id: 'birthYear',      type: 'field', position: { x: 0,   y: 0   }, data: { label: 'birthYear',      group: 'insured' } },
-  { id: 'gender',         type: 'field', position: { x: 0,   y: 60  }, data: { label: 'gender',         group: 'insured' } },
-  { id: 'occupation',     type: 'field', position: { x: 0,   y: 120 }, data: { label: 'occupation',     group: 'insured' } },
-  { id: 'height',         type: 'field', position: { x: 0,   y: 200 }, data: { label: 'height',         group: 'health' } },
-  { id: 'weight',         type: 'field', position: { x: 0,   y: 260 }, data: { label: 'weight',         group: 'health' } },
-  { id: 'smoke',          type: 'field', position: { x: 0,   y: 320 }, data: { label: 'smoke',          group: 'health' } },
-  { id: 'chronicDisease', type: 'field', position: { x: 0,   y: 380 }, data: { label: 'chronicDisease', group: 'health' } },
-  { id: 'productType',    type: 'field', position: { x: 0,   y: 460 }, data: { label: 'productType',    group: 'product' } },
-  { id: 'coverageAmount', type: 'field', position: { x: 0,   y: 520 }, data: { label: 'coverageAmount', group: 'product' } },
-  { id: 'paymentFreq',    type: 'field', position: { x: 0,   y: 580 }, data: { label: 'paymentFreq',    group: 'product' } },
-  { id: 'addAccident',    type: 'field', position: { x: 0,   y: 640 }, data: { label: 'addAccident',    group: 'product' } },
-  { id: 'addDisability',  type: 'field', position: { x: 0,   y: 700 }, data: { label: 'addDisability',  group: 'product' } },
+  { id: 'birthYear',      type: 'field', position: { x: 0,   y: 0   }, data: { label: '出生年份',   group: 'insured', sub: 'birthYear' } },
+  { id: 'gender',         type: 'field', position: { x: 0,   y: 60  }, data: { label: '性别',       group: 'insured', sub: 'gender' } },
+  { id: 'occupation',     type: 'field', position: { x: 0,   y: 120 }, data: { label: '职业',       group: 'insured', sub: 'occupation' } },
+  { id: 'height',         type: 'field', position: { x: 0,   y: 200 }, data: { label: '身高',       group: 'health',  sub: 'height' } },
+  { id: 'weight',         type: 'field', position: { x: 0,   y: 260 }, data: { label: '体重',       group: 'health',  sub: 'weight' } },
+  { id: 'smoke',          type: 'field', position: { x: 0,   y: 320 }, data: { label: '吸烟',       group: 'health',  sub: 'smoke' } },
+  { id: 'chronicDisease', type: 'field', position: { x: 0,   y: 380 }, data: { label: '慢性病史',   group: 'health',  sub: 'chronicDisease' } },
+  { id: 'productType',    type: 'field', position: { x: 0,   y: 460 }, data: { label: '险种类型',   group: 'product', sub: 'productType' } },
+  { id: 'coverageAmount', type: 'field', position: { x: 0,   y: 520 }, data: { label: '保额',       group: 'product', sub: 'coverageAmount' } },
+  { id: 'paymentFreq',    type: 'field', position: { x: 0,   y: 580 }, data: { label: '缴费频率',   group: 'product', sub: 'paymentFreq' } },
+  { id: 'addAccident',    type: 'field', position: { x: 0,   y: 640 }, data: { label: '附加意外险', group: 'product', sub: 'addAccident' } },
+  { id: 'addDisability',  type: 'field', position: { x: 0,   y: 700 }, data: { label: '附加残疾险', group: 'product', sub: 'addDisability' } },
 
   // ── Layer 1 – first computed ─────────────────────────────────────────────
-  { id: 'age',            type: 'field', position: { x: 200, y: 0   }, data: { label: 'age',            group: 'insured', sub: '← birthYear' } },
-  { id: 'occupationRisk', type: 'field', position: { x: 200, y: 120 }, data: { label: 'occupationRisk', group: 'insured', sub: '← occupation' } },
-  { id: 'bmi',            type: 'field', position: { x: 200, y: 230 }, data: { label: 'bmi',            group: 'health',  sub: '← h + w' } },
-  { id: 'bmiStatus',      type: 'field', position: { x: 200, y: 310 }, data: { label: 'bmiStatus',      group: 'health',  sub: '← bmi' } },
-  { id: 'needMedical',    type: 'field', position: { x: 200, y: 520 }, data: { label: 'needMedical',    group: 'product', sub: '← coverageAmount' } },
+  { id: 'age',            type: 'field', position: { x: 200, y: 0   }, data: { label: '年龄',       group: 'insured', sub: '← 出生年份' } },
+  { id: 'occupationRisk', type: 'field', position: { x: 200, y: 120 }, data: { label: '职业风险系数', group: 'insured', sub: '← 职业' } },
+  { id: 'bmi',            type: 'field', position: { x: 200, y: 230 }, data: { label: 'BMI 指数',   group: 'health',  sub: '← 身高 + 体重' } },
+  { id: 'bmiStatus',      type: 'field', position: { x: 200, y: 310 }, data: { label: 'BMI 状态',   group: 'health',  sub: '← BMI 指数' } },
+  { id: 'needMedical',    type: 'field', position: { x: 200, y: 520 }, data: { label: '需体检',     group: 'product', sub: '← 保额' } },
 
   // ── Layer 2 – baseRate, basePremium ──────────────────────────────────────
-  { id: 'baseRate',       type: 'field', position: { x: 400, y: 30  }, data: { label: 'baseRate',       group: 'premium', sub: '← productType + age + gender' } },
-  { id: 'basePremium',    type: 'field', position: { x: 400, y: 490 }, data: { label: 'basePremium',    group: 'premium', sub: '← baseRate × coverageAmount × 10' } },
+  { id: 'baseRate',       type: 'field', position: { x: 400, y: 30  }, data: { label: '基础费率',   group: 'premium', sub: '← 险种 + 年龄 + 性别' } },
+  { id: 'basePremium',    type: 'field', position: { x: 400, y: 490 }, data: { label: '基础保费',   group: 'premium', sub: '← 基础费率 × 保额 × 10' } },
 
   // ── Layer 3 – surcharges ─────────────────────────────────────────────────
-  { id: 'smokerSurcharge',      type: 'field', position: { x: 620, y: 320 }, data: { label: 'smokerSurcharge',      group: 'premium', sub: '× 30%' } },
-  { id: 'occupationSurcharge',  type: 'field', position: { x: 620, y: 400 }, data: { label: 'occupationSurcharge',  group: 'premium', sub: '× risk%' } },
-  { id: 'bmiSurcharge',         type: 'field', position: { x: 620, y: 480 }, data: { label: 'bmiSurcharge',         group: 'premium', sub: '× 10/20%' } },
-  { id: 'diseaseSurcharge',     type: 'field', position: { x: 620, y: 560 }, data: { label: 'diseaseSurcharge',     group: 'premium', sub: '× 25%' } },
-  { id: 'accidentPremium',      type: 'field', position: { x: 620, y: 640 }, data: { label: 'accidentPremium',      group: 'premium', sub: 'fixed' } },
-  { id: 'disabilityPremium',    type: 'field', position: { x: 620, y: 720 }, data: { label: 'disabilityPremium',    group: 'premium', sub: 'fixed' } },
+  { id: 'smokerSurcharge',      type: 'field', position: { x: 620, y: 320 }, data: { label: '吸烟附加费',   group: 'premium', sub: '× 30%' } },
+  { id: 'occupationSurcharge',  type: 'field', position: { x: 620, y: 400 }, data: { label: '职业附加费',   group: 'premium', sub: '× 风险系数%' } },
+  { id: 'bmiSurcharge',         type: 'field', position: { x: 620, y: 480 }, data: { label: 'BMI 附加费',   group: 'premium', sub: '× 10/20%' } },
+  { id: 'diseaseSurcharge',     type: 'field', position: { x: 620, y: 560 }, data: { label: '疾病附加费',   group: 'premium', sub: '× 25%' } },
+  { id: 'accidentPremium',      type: 'field', position: { x: 620, y: 640 }, data: { label: '意外险保费',   group: 'premium', sub: '固定费率' } },
+  { id: 'disabilityPremium',    type: 'field', position: { x: 620, y: 720 }, data: { label: '残疾险保费',   group: 'premium', sub: '固定费率' } },
 
   // ── Layer 4 – adjustedAnnual ─────────────────────────────────────────────
-  { id: 'adjustedAnnual', type: 'field', position: { x: 840, y: 490 }, data: { label: 'adjustedAnnual', group: 'premium', sub: 'sum of 6 sources' } },
+  { id: 'adjustedAnnual', type: 'field', position: { x: 840, y: 490 }, data: { label: '调整后年保费', group: 'premium', sub: '6 项加总' } },
 
   // ── Layer 5 – freqFactor ─────────────────────────────────────────────────
-  { id: 'freqFactor',     type: 'field', position: { x: 840, y: 580 }, data: { label: 'freqFactor',     group: 'premium', sub: '← paymentFreq' } },
+  { id: 'freqFactor',     type: 'field', position: { x: 840, y: 580 }, data: { label: '频率系数',   group: 'premium', sub: '← 缴费频率' } },
 
   // ── Layer 6 – annualPremium ──────────────────────────────────────────────
-  { id: 'annualPremium',  type: 'field', position: { x: 1060, y: 520 }, data: { label: 'annualPremium', group: 'premium', sub: '× freqFactor' } },
+  { id: 'annualPremium',  type: 'field', position: { x: 1060, y: 520 }, data: { label: '年缴保费',  group: 'premium', sub: '× 频率系数' } },
 
   // ── Layer 7 – perPayment ─────────────────────────────────────────────────
-  { id: 'perPayment',     type: 'field', position: { x: 1280, y: 520 }, data: { label: 'perPayment',    group: 'premium', sub: '÷ times' } },
+  { id: 'perPayment',     type: 'field', position: { x: 1280, y: 520 }, data: { label: '每期保费',  group: 'premium', sub: '÷ 期数' } },
 ]
 
 // ── 边定义 ───────────────────────────────────────────────────────────────────

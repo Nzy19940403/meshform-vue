@@ -17,6 +17,7 @@
           ref="formRef"
           :schema="schema"
           :rules="rules"
+          :uischema="uischema"
           @change="onFormChange"
           @submit="onSubmit"
         >
@@ -178,16 +179,72 @@ const rules: Record<string, FromDescriptor> = {
     }
   ),
 
-  'billing.installments.hidden':   from('billing.paymentMethod', (m: string) => m !== 'monthly'),
-  'billing.monthlyPayment.hidden': from('billing.paymentMethod', (m: string) => m !== 'monthly'),
+  // 切换到月度分期时：副作用自动将分期期数重置为 3（和 product.name.options 的模式一致）
+  'billing.installments.hidden': from(
+    'billing.paymentMethod',
+    (m: string) => m !== 'monthly'
+  ),
 
+  'billing.monthlyPayment.hidden': from(
+    'billing.paymentMethod', 
+    (m: string) => m !== 'monthly',
+  ),
+
+  // 每期金额：sources 中加入 paymentMethod，保证切换到"月度分期"时
+  // DAG 走 paymentMethod → monthlyPayment.value 这条边，从上游重新拉取值。
+  // 若只依赖 total + installments，切换支付方式时这两个字段没变化，
+  // DAG 不会重跑此规则，value 就停在隐藏期间的初始值 0。
   'billing.monthlyPayment.value': from(
-    ['billing.total', 'billing.installments'],
-    (total: number, inst: string) => {
+    ['billing.total', 'billing.installments', 'billing.paymentMethod'],
+    (total: number, inst: string, method: string) => {
+      if (method !== 'monthly') return 0
       const n = parseInt(inst, 10)
       return n > 0 ? Math.round(total / n) : 0
-    }
+    },
   ),
+}
+
+// ── 自定义 UISchema — 按采购逻辑分行，合理分配字段宽度 ───────────────────────
+function c(scope: string, span = 1) {
+  return { type: 'Control', scope, ...(span !== 1 ? { options: { span } } : {}) } as any
+}
+function row(...els: any[]) { return { type: 'HorizontalLayout', elements: els } as any }
+function grp(label: string, ...els: any[]) { return { type: 'Group', label, elements: els } as any }
+
+const uischema = {
+  type: 'VerticalLayout',
+  elements: [
+    grp('产品信息',
+      // 类目(1) | 产品名称(2) | 数量(1) | 单价 readonly(1)
+      row(
+        c('#/properties/product/properties/category'),
+        c('#/properties/product/properties/name', 2),
+        c('#/properties/product/properties/quantity'),
+        c('#/properties/product/properties/basePrice'),
+      ),
+    ),
+    grp('折扣设置',
+      // 折扣类型(2) | 折扣值(2，默认隐藏)
+      row(
+        c('#/properties/discount/properties/type', 2),
+        c('#/properties/discount/properties/amount', 2),
+      ),
+    ),
+    grp('结算信息',
+      // 小计(1) | 应付总额(1) | 支付方式(2)
+      row(
+        c('#/properties/billing/properties/subtotal'),
+        c('#/properties/billing/properties/total'),
+        c('#/properties/billing/properties/paymentMethod', 2),
+      ),
+      // 分期期数(1) | 每期金额(1)（都可能隐藏） | 采购备注(3 full)
+      row(
+        c('#/properties/billing/properties/installments'),
+        c('#/properties/billing/properties/monthlyPayment'),
+        c('#/properties/billing/properties/notes', 3),
+      ),
+    ),
+  ],
 }
 
 // ── 状态 ──────────────────────────────────────────────────────────────────────
@@ -286,6 +343,19 @@ function onReset() { submitted.value = false; submittedData.value = {} }
 }
 .df-dot--green { background: #4caf50; box-shadow: 0 0 5px #4caf50; }
 .df-dot--gold  { background: #ffd54f; box-shadow: 0 0 5px #ffd54f; }
+
+/* 强制 flex-wrap 布局（兼容旧版 form-vue 包） */
+.df-form-col :deep(.mesh-layout--horizontal) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px 16px !important;
+  width: 100% !important;
+}
+.df-form-col :deep(.mesh-layout__item),
+.df-form-col :deep(.mesh-layout--horizontal > *) {
+  flex: 1 1 180px !important;
+  min-width: 0 !important;
+}
 
 .df-panel-pre {
   margin: 0;

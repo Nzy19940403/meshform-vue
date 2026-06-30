@@ -15,9 +15,9 @@
     "@jsonforms/core": "^3.8.0",
     "@jsonforms/vue": "^3.8.0",
     "@mdi/font": "^7.4.47",
-    "@meshflow/core": "^0.8.9",
-    "@meshflow/form": "^0.3.0",
-    "@meshflow/form-vue": "^0.1.2",
+    "@meshflow/core": "^1.0.1",
+    "@meshflow/form": "^1.0.1",
+    "@meshflow/form-vue": "^0.1.8",
     "@vue-flow/core": "^1.48.2",
     "vuetify": "^3.0.0"
   }

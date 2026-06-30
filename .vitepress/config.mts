@@ -21,47 +21,54 @@ export default defineConfig({
       lang: 'zh-CN',
       themeConfig: {
         nav: [
-          { text: 'Home', link: '/' },
-          { text: 'Guide', link: '/guide/getting-started' },
+          { text: '首页', link: '/' },
+          { text: '指南', link: '/guide/getting-started' },
           { text: 'API', link: '/guide/api' },
           {
             text: 'Demo',
             items: [
-              { text: 'Entangle 双向纠缠', link: '/demos/entangle' },
-              { text: '人寿保险投保申请', link: '/demos/insurance' },
-              { text: '云资源采购单',      link: '/demos/order-form' },
+              { text: '云资源采购单',         link: '/demos/order-form'      },
+              { text: 'Entangle 双向纠缠',   link: '/demos/entangle'        },
+              { text: '人寿保险投保申请',     link: '/demos/insurance'       },
+              { text: '企业团险组合定价',     link: '/demos/group-insurance' },
+              { text: '养老年金双向规划',     link: '/demos/pension'         },
+              { text: '工程报价单（DAG + 纠缠）', link: '/demos/engineering-quote' },
             ],
           },
         ],
         sidebar: [
           {
-            text: 'Getting Started',
+            text: '快速上手',
             items: [
-              { text: 'Quick Start', link: '/guide/getting-started' },
-              { text: 'Why meshform-vue', link: '/guide/why' },
+              { text: '快速开始', link: '/guide/getting-started' },
+              { text: '为什么选择 meshform-vue', link: '/guide/why' },
             ],
           },
           {
-            text: 'Core Concepts',
+            text: '核心概念',
             items: [
+              { text: '架构设计', link: '/guide/architecture' },
               { text: 'Schema', link: '/guide/schema' },
-              { text: 'Linkage API', link: '/guide/linkage' },
-              { text: 'MeshForm Component', link: '/guide/mesh-form' },
-              { text: 'Custom Renderer', link: '/guide/custom-renderer' },
+              { text: '联动 API', link: '/guide/linkage' },
+              { text: 'MeshForm 组件', link: '/guide/mesh-form' },
+              { text: '自定义渲染器', link: '/guide/custom-renderer' },
             ],
           },
           {
-            text: 'API Reference',
+            text: 'API 参考',
             items: [
-              { text: 'Full API', link: '/guide/api' },
+              { text: '完整 API', link: '/guide/api' },
             ],
           },
           {
             text: 'Demos',
             items: [
-              { text: 'Entangle: DAG + 双向纠缠', link: '/demos/entangle' },
-              { text: 'Insurance Application', link: '/demos/insurance' },
-              { text: 'Cloud Order Form', link: '/demos/order-form' },
+              { text: '云资源采购单',            link: '/demos/order-form'      },
+              { text: 'Entangle: DAG + 双向纠缠', link: '/demos/entangle'        },
+              { text: '人寿保险投保申请',        link: '/demos/insurance'       },
+              { text: '企业团险组合定价',        link: '/demos/group-insurance' },
+              { text: '养老年金双向规划',        link: '/demos/pension'         },
+              { text: '工程报价单（DAG + 纠缠）', link: '/demos/engineering-quote' },
             ],
           },
         ],
