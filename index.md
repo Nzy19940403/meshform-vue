@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "MeshForm Vue"
   text: "为 JSON Forms 注入确定性"
-  tagline: "作为 <json-forms> 的 Drop-in 替代方案，将视图渲染与状态调度彻底解耦。基于 DAG 与水位线机制，为复杂表单的字段联动提供绝对的时序与高性能。"
+  tagline: "一个面向复杂业务表单的 Drop-in enhancement layer。保留 JSON Schema、UISchema 与 renderer 体系，把字段联动、异步传播与双向约束交给 MeshFlow。"
   image:
     src: /logo.svg
     alt: MeshForm Logo
@@ -13,27 +13,43 @@ hero:
       text: 快速开始
       link: /guide/getting-started
     - theme: alt
-      text: 了解架构设计
+      text: 架构设计
       link: /guide/architecture
 
 features:
   - title: "Drop-in 无损替换"
     icon: "📦"
-    details: "JSON Forms 的即插即用型状态大脑。完全兼容原有 API 和 UI 协议，只需注入 :rules 属性，即可将表单交互逻辑托管至 MeshFlow 引擎，迁移成本归零。"
+    details: "作为 @jsonforms/vue 的增强层而存在。保留 JSON Schema、UISchema 与 renderer 协议，只需引入 :rules，即可将复杂联动交由 MeshFlow 接管。"
   - title: "DAG 拓扑与循环依赖收敛"
     icon: "⚡"
-    details: "同时支持拓扑有序的 DAG 执行流与带有环路依赖的纠缠系统。采用水位线调度与势能收敛算法，无论逻辑链路多复杂，都能保证状态演化的确定性与一致性。"
+    details: "同时覆盖拓扑有序的单向依赖与带环路的双向约束。基于水位线调度与收敛机制，在异步传播、实时计算和复杂联动下维持稳定时序。"
   - title: "控制权反转 (IoC)"
     icon: "🎛️"
-    details: "组件仅负责被动渲染。从字段显隐到属性控制，皆由引擎通过 UITrigger 执行原子级调度。拒绝框架级全量重绘，只在计算结果演化时触发精准更新。"
+    details: "渲染层负责呈现，状态演化交由引擎调度。从字段显隐到属性控制，联动逻辑不再散落于 watch 与临时状态，而是统一进入规则系统。"
   - title: "纯粹的 Headless 架构"
     icon: "🧩"
-    details: "引擎逻辑与 UI 视图彻底解耦。核心计算由纯 TypeScript 实现，不绑定特定 UI 框架，支持跨端跨框架逻辑复用。"
+    details: "将计算与视图彻底拆开。核心调度由纯 TypeScript 引擎承载，Vue 只是接收结果的渲染层，这让规则测试、跨端复用与系统演进都更从容。"
 ---
 
 <script setup>
 import ArchGraph from './.vitepress/components/ArchGraph.vue'
 </script>
+
+## 把复杂表单的状态调度，从视图层中剥离出来
+
+MeshForm Vue 不试图重写一套新的表单范式。
+
+它做的事情更直接：在保留 JSON Forms 渲染体系的前提下，把复杂表单里最难维护的部分单独抽出来，包括字段依赖、执行时序、异步传播，以及双向约束下的状态收敛。
+
+## 为高密度联动场景设计
+
+MeshForm Vue 更适合这些表单：
+
+- 保险投保和核保表单
+- 采购、报价、计费、算费表单
+- 产品配置和资格判断表单
+- 依赖跨字段推导、异步传播、双向约束与状态收敛的中后台系统
+- 已经在使用 `@jsonforms/vue`，但联动代码越来越重的团队
 
 ## 架构哲学：计算与视图解耦
 
@@ -41,6 +57,6 @@ import ArchGraph from './.vitepress/components/ArchGraph.vue'
   <ArchGraph />
 </ClientOnly>
 
-通过引入 MeshFlow 作为“最强外脑”，我们将表单的**数据推演流**与**UI 渲染流**进行了彻底的物理隔离。两层之间仅通过 `UITrigger` 接口通信：底层引擎在后台静默完成高频、复杂的拓扑计算，而视图层只负责接收确定的“稳态快照”进行局部刷新。
+通过引入 MeshFlow 作为状态引擎，MeshForm Vue 将**字段计算**与**UI 渲染**拆成两层：底层负责规则调度、传播和收敛，视图层只负责消费当前结果并完成渲染。
 
-这意味着：你可以单独对联动逻辑进行单元测试，也可以随时更换底层的 UI 组件库（Element Plus / Ant Design / Vuetify）。任凭表现层千变万化，你的业务因果链条始终稳如泰山。
+这样做的直接收益是：业务规则更容易测试，联动关系更容易解释，渲染层也不必继续承担本不属于它的时序负担。
